@@ -1,6 +1,6 @@
 # change-string-case
 
-A simple plugin to change the formatting of the selected phrase(s) from one case to another.
+A simple VSCode plugin to change the formatting of the selected phrase(s) from one case to another.
 
 ####Supported Case Formats:
   - **camelCase**
