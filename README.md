@@ -21,7 +21,7 @@ Run `ext install change-string-case` in the command palette.
 
 Select the phrase(s) that you want to update the casing of, and run `Change Case: <case-type>` in the command palette.
 
-![Usage](./src/images/code-gif.gif)
+![Usage](./code-gif.gif)
 
 
 <!--
