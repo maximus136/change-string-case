@@ -2,7 +2,7 @@
 
 A simple VSCode plugin to change the formatting of the selected phrase(s) from one case to another.
 
-####Supported Case Formats:
+Supported Case Formats:
   - **camelCase**
   - **lowercase**
   - **lower-kebab-case**
@@ -21,7 +21,7 @@ Run `ext install change-string-case` in the command palette.
 
 Select the phrase(s) that you want to update the casing of, and run `Change Case: <case-type>` in the command palette.
 
-![Usage](./code-gif.gif)
+![Usage](https://raw.githubusercontent.com/maximus136/change-string-case/master/code-gif.gif)
 
 
 <!--
