@@ -135,13 +135,19 @@ class CaseChanger {
   }
 
   private getSentenceCase(str: string): string {
-    let newStr = this.getDesiredFormatFromCamelCase(str, ' ');
-
-    // get a sentence-cased string.
-    newStr = newStr.charAt(0).toUpperCase() + str.slice(1);
-
-    // now replace -'s and _'s that are NOT followed by a space with a space first, and then finally replace all other -'s and _'s with empty strings.
-    return newStr.replace(/[-|_](?=[^ ])/g, ' ').replace(/-|_/g, '');
+    let newStr = ''; 
+    newStr = this.getDesiredFormatFromCamelCase(str, ' ');
+    // Split the string into consecutive words if camel or pascal cased  
+    // now replace -'s and _'s that are NOT followed by a space with a space first, then remove the pending ones
+    // Split the string into its parts to convert to Sentence Case
+    let newStrArr = newStr.replace(/[-|_](?=[^ ])/g, ' ').replace(/-|_/g,'').split(' ');
+    // Convert each of the words to lower case
+    newStrArr = newStrArr.map(word => word.toLowerCase());
+    // Convert the first word to Title case
+    newStrArr[0] = this.convertToTitleCase(newStrArr[0]);
+    // Join the array and then trim multiple white spaces
+    newStr = this.trimMultipleWhiteSpaces(newStrArr.join(' '));
+    return newStr;
   }
 
   private getDesiredFormatFromCamelCase(str: string, suffix: string): string {
@@ -153,5 +159,16 @@ class CaseChanger {
     const camelRegex = /[^A-Z](?=[A-Z])/g;
 
     return separatorRegex.test(str) || camelRegex.test(str);
+  }
+
+  // Removes multiple white spaces from within a string
+  // trim() removes white spaces from the ends of a string
+  private trimMultipleWhiteSpaces(str: string) {
+    return str.replace(/\s+/g, ' ').trim();
+  }
+
+  // Returns a string with Title case
+  private convertToTitleCase(str: string) {
+    return str.charAt(0).toUpperCase()+str.slice(1);
   }
 }
