@@ -13,7 +13,8 @@ export function activate(context: vscode.ExtensionContext) {
     'Sentence',
     'Upper',
     'UpperKebab',
-    'UpperSnake'
+    'UpperSnake',
+    'Title'
   ];
   const disposable = () => {
     // return an array of command-registrations using the array element-names.
@@ -75,7 +76,11 @@ class CaseChanger {
         case 'pascal':
           return this.getCamelCase(str, false);
         case 'sentence':
-          return this.getSentenceCase(str);
+          // Pass in the false parameter to toggle the title case off
+          return this.getSentenceCase(str, false);
+        case 'title':
+          // Pass in the true parameter to toggle to title case on
+          return this.getSentenceCase(str, true);
         default:
           throw new Error('Case-conversion not supported! 🙁');
       }
@@ -134,17 +139,25 @@ class CaseChanger {
     return firstCharacter + newStr.slice(1);
   }
 
-  private getSentenceCase(str: string): string {
+  private getSentenceCase(str: string, isTitleCase: boolean = false): string {
     let newStr = ''; 
     newStr = this.getDesiredFormatFromCamelCase(str, ' ');
     // Split the string into consecutive words if camel or pascal cased  
     // now replace -'s and _'s that are NOT followed by a space with a space first, then remove the pending ones
     // Split the string into its parts to convert to Sentence Case
     let newStrArr = newStr.replace(/[-|_](?=[^ ])/g, ' ').replace(/-|_/g,'').split(' ');
-    // Convert each of the words to lower case
-    newStrArr = newStrArr.map(word => word.toLowerCase());
-    // Convert the first word to Title case
-    newStrArr[0] = this.convertToTitleCase(newStrArr[0]);
+    
+    // If title case, then convert each word to title case
+    if(isTitleCase) {
+      newStrArr = newStrArr.map(word => this.convertToTitleCase(word));
+    }
+    else {
+      // Convert each of the words to lower case
+      newStrArr = newStrArr.map(word => word.toLowerCase());
+      // Convert the first word to Title case
+      newStrArr[0] = this.convertToTitleCase(newStrArr[0]);
+    }
+    
     // Join the array and then trim multiple white spaces
     newStr = this.trimMultipleWhiteSpaces(newStrArr.join(' '));
     return newStr;
