@@ -24,7 +24,8 @@
 		"onCommand:extension.changeUpperSnakeCase",
 		"onCommand:extension.changeCamelCase",
 		"onCommand:extension.changePascalCase",
-		"onCommand:extension.changeSentenceCase"
+		"onCommand:extension.changeSentenceCase",
+		"onCommand:extension.changeTitleCase"
 	],
 	"main": "./out/extension",
 	"contributes": {
@@ -73,7 +74,13 @@
 				"command": "extension.changeSentenceCase",
 				"title": "Sentencecase",
 				"category": "Change Case"
+			},
+			{
+				"command": "extension.changeTitleCase",
+				"title": "TitleCase",
+				"category": "Change Case"
 			}
+
 		]
 	},
 	"scripts": {
