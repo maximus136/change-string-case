@@ -6,3 +6,6 @@ The first release.
 
 ## Release 1.0.3
 - Fix for issues with sentence-case [#1](https://github.com/maximus136/change-string-case/issues/1)
+
+## Release 1.0.4
+- Added title case support [#1](https://github.com/maximus136/change-string-case/issues/2)

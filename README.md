@@ -12,6 +12,7 @@ Supported Case Formats:
   - **UPPERCASE**
   - **UPPER-KEBAB-CASE**
   - **UPPER_SNAKE_CASE**
+  - **Title Case**
 
 ## Installation
 
@@ -35,5 +36,10 @@ Calling out known issues can help limit users opening duplicate issues against y
 
 Initial release of Change String Case
 
+## Release 1.0.3
+- Fix for issues with sentence-case [#1](https://github.com/maximus136/change-string-case/issues/1)
+
+## Release 1.0.4
+- Added title case support [#1](https://github.com/maximus136/change-string-case/issues/2)
 
 **Enjoy!**
