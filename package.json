@@ -2,7 +2,7 @@
 	"name": "change-string-case",
 	"displayName": "Change String Case",
 	"description": "Change the selected string from one case format to another. Supported cases - UPPERCASE, lowercase, PascalCase, camelCase, snake_case, kebab-case, Sentencecase",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"icon": "icon.png",
 	"publisher": "maximus136",
 	"repository": {
