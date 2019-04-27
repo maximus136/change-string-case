@@ -14,11 +14,12 @@ export function activate(context: vscode.ExtensionContext) {
     'Upper',
     'UpperKebab',
     'UpperSnake',
-    'Title'
+    'Title',
+    'Toggle'
   ];
   const disposable = () => {
     // return an array of command-registrations using the array element-names.
-    return caseConversionSet.map(type =>
+    return caseConversionSet.map((type) =>
       vscode.commands.registerCommand(`extension.change${type}Case`, () => {
         const caseChanger = new CaseChanger();
         caseChanger.changeStringCase(type.toLowerCase());
@@ -44,7 +45,7 @@ class CaseChanger {
       return;
     }
 
-    this.textEditor.edit(builder => {
+    this.textEditor.edit((builder) => {
       for (const selection of selections) {
         if (!this.textEditor) {
           break;
@@ -59,6 +60,8 @@ class CaseChanger {
   private getNewString(str: string, toCase: string): string {
     try {
       switch (toCase) {
+        case 'toggle':
+          return str === str.toUpperCase() ? str.toLowerCase() : str.toUpperCase();
         case 'upper':
           return str.replace(/[-_]/g, ' ').toUpperCase();
         case 'lower':
@@ -94,28 +97,18 @@ class CaseChanger {
     return this.textEditor ? this.textEditor.selections : [];
   }
 
-  private getKebabOrSnakeCase(
-    str: string,
-    isKebab = true,
-    isLower = true
-  ): string {
+  private getKebabOrSnakeCase(str: string, isKebab = true, isLower = true): string {
     const suffix = isKebab ? '-' : '_';
     const charToReplace = isKebab ? '_' : '-'; // for kebab-case, replace _'s and vice-versa.
     const regexForReplace = new RegExp(`[${charToReplace}/\]`, 'g');
-    const regexToAvoidMultipleChars = new RegExp(
-      `[${suffix}](?=[${suffix}])`,
-      'g'
-    );
+    const regexToAvoidMultipleChars = new RegExp(`[${suffix}](?=[${suffix}])`, 'g');
     let newStr = this.getDesiredFormatFromCamelCase(str, suffix);
 
     if (!this.hasSeparators(newStr)) {
       throw new Error(this.errorMsg);
     }
 
-    newStr = newStr
-      .replace(/ /g, '')
-      .replace(regexForReplace, suffix)
-      .replace(regexToAvoidMultipleChars, '');
+    newStr = newStr.replace(/ /g, '').replace(regexForReplace, suffix).replace(regexToAvoidMultipleChars, '');
 
     return isLower ? newStr.toLowerCase() : newStr.toUpperCase();
   }
@@ -128,43 +121,38 @@ class CaseChanger {
     let newStr = this.getDesiredFormatFromCamelCase(str, ' ');
     newStr = newStr
       .toLowerCase()
-      .replace(/(?:(^.)|([-_ \s]+.))/g, match =>
-        match.charAt(match.length - 1).toUpperCase()
-      );
+      .replace(/(?:(^.)|([-_ \s]+.))/g, (match) => match.charAt(match.length - 1).toUpperCase());
 
     // return camelCased or PascalCased output based on the isCamel option.
-    const firstCharacter = isCamel
-      ? newStr.charAt(0).toLowerCase()
-      : newStr.charAt(0).toUpperCase();
+    const firstCharacter = isCamel ? newStr.charAt(0).toLowerCase() : newStr.charAt(0).toUpperCase();
     return firstCharacter + newStr.slice(1);
   }
 
   private getSentenceCase(str: string, isTitleCase: boolean = false): string {
-    let newStr = ''; 
+    let newStr = '';
     newStr = this.getDesiredFormatFromCamelCase(str, ' ');
-    // Split the string into consecutive words if camel or pascal cased  
+    // Split the string into consecutive words if camel or pascal cased
     // now replace -'s and _'s that are NOT followed by a space with a space first, then remove the pending ones
     // Split the string into its parts to convert to Sentence Case
-    let newStrArr = newStr.replace(/[-|_](?=[^ ])/g, ' ').replace(/-|_/g,'').split(' ');
-    
+    let newStrArr = newStr.replace(/[-|_](?=[^ ])/g, ' ').replace(/-|_/g, '').split(' ');
+
     // If title case, then convert each word to title case
-    if(isTitleCase) {
-      newStrArr = newStrArr.map(word => this.convertToTitleCase(word));
-    }
-    else {
+    if (isTitleCase) {
+      newStrArr = newStrArr.map((word) => this.convertToTitleCase(word));
+    } else {
       // Convert each of the words to lower case
-      newStrArr = newStrArr.map(word => word.toLowerCase());
+      newStrArr = newStrArr.map((word) => word.toLowerCase());
       // Convert the first word to Title case
       newStrArr[0] = this.convertToTitleCase(newStrArr[0]);
     }
-    
+
     // Join the array and then trim multiple white spaces
     newStr = this.trimMultipleWhiteSpaces(newStrArr.join(' '));
     return newStr;
   }
 
   private getDesiredFormatFromCamelCase(str: string, suffix: string): string {
-    return str.replace(/[^A-Z](?=[A-Z])/g, match => `${match}${suffix}`);
+    return str.replace(/[^A-Z](?=[A-Z])/g, (match) => `${match}${suffix}`);
   }
 
   private hasSeparators(str: string): boolean {
@@ -182,6 +170,6 @@ class CaseChanger {
 
   // Returns a string with Title case
   private convertToTitleCase(str: string) {
-    return str.charAt(0).toUpperCase()+str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1);
   }
 }

@@ -42,4 +42,7 @@ Initial release of Change String Case
 ## Release 1.0.4
 - Added title case support [#1](https://github.com/maximus136/change-string-case/issues/2)
 
+## Release 1.1.0
+- Added key-bindings to toggle between upper and lower case. Use `ctrl+capslock` or `cmd+capslock` to toggle upper/lower for any of the supported cases.
+
 **Enjoy!**
