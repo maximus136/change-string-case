@@ -115,13 +115,15 @@ class CaseChanger {
 
   // thanks timhobbs/camelCase.js[https://gist.github.com/timhobbs/23c891bfea312cf43f31395d2d6660b1]
   private getCamelCase(str: string, isCamel = true): string {
-    if (!this.hasSeparators(str)) {
-      throw new Error(this.errorMsg);
+    let newStr = ''
+    if (this.hasSeparators(str)) {
+      newStr = this.getDesiredFormatFromCamelCase(str, ' ');
+      newStr = newStr
+        .toLowerCase()
+        .replace(/(?:(^.)|([-_ \s]+.))/g, (match) => match.charAt(match.length - 1).toUpperCase());
+    } else {
+      newStr = str;
     }
-    let newStr = this.getDesiredFormatFromCamelCase(str, ' ');
-    newStr = newStr
-      .toLowerCase()
-      .replace(/(?:(^.)|([-_ \s]+.))/g, (match) => match.charAt(match.length - 1).toUpperCase());
 
     // return camelCased or PascalCased output based on the isCamel option.
     const firstCharacter = isCamel ? newStr.charAt(0).toLowerCase() : newStr.charAt(0).toUpperCase();
