@@ -12,3 +12,6 @@ The first release.
 
 ## Release 1.1.0
 - Added key-bindings to toggle between upper and lower case. Use `ctrl+capslock` or `cmd+capslock` to toggle upper/lower for any of the supported cases. [#3](https://github.com/maximus136/change-string-case/issues/3)
+
+## Release 1.1.2
+- Fix for issue with PascalCase [#7](https://github.com/maximus136/change-string-case/issues/7)
