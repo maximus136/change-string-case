@@ -6,7 +6,7 @@ Supported Case Formats:
   - **camelCase**
   - **lowercase**
   - **lower-kebab-case**
-  - **lower_snake_case**
+  - **snake_case**
   - **PascalCase**
   - **Sentencecase**
   - **UPPERCASE**
